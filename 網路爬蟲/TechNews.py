@@ -1,30 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 import requests
 import json
 from bs4 import BeautifulSoup as bs
 res = requests.get('https://technews.tw/')
 soup = bs(res.text,'lxml')
 
-
-# In[2]:
-
-
 select = soup.select('.block2014')
-
-
-# In[10]:
-
-
-soup
-
-
-# In[3]:
-
 
 content1 = []
 for i,content in enumerate(select):
@@ -41,28 +24,14 @@ for i,content in enumerate(select):
     a['spotlist'] = spotlist
     content1.append(a)
 
-
-# In[4]:
-
-
 file_name = 'practice1.json'
 with open(file_name, 'w', encoding='utf8') as file_object:
     json.dump(content1,file_object,ensure_ascii=False)
-
-
-# In[5]:
-
 
 file_name = 'practice1.json'
 with open(file_name, 'r', encoding='utf8') as file:
     data = json.loads(file.read())
 
-
-# In[6]:
-
-
-import requests
-from bs4 import BeautifulSoup as bs
 for i in data:
     name = 'sum_'+ i['category'] + '_' + i['sum_title'][0:4] + '.txt'
     res = requests.get(i['sum_title_url'])
@@ -73,13 +42,6 @@ for i in data:
         with open(name, 'a', encoding='utf8') as file_object:
             file_object.write(b)
     
-
-
-# In[7]:
-
-
-import requests
-from bs4 import BeautifulSoup as bs
 for i in data:
     c = i['category']
     s = i['spotlist']
@@ -91,10 +53,6 @@ for i in data:
             b = k.text.strip()
             with open(name, 'a', encoding='utf8') as file_object:
                 file_object.write(b)
-
-
-# In[8]:
-
 
 name = []
 url = []
